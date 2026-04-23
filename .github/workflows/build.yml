@@ -1,6 +1,6 @@
 name: Builds
 on:
-  pull_request:
+  workflow_dispatch:
 
 defaults:
   run:
