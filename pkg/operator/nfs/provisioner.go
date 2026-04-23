@@ -127,10 +127,10 @@ func (p *Provisioner) Provision(ctx context.Context, options controller.Provisio
 
 	pvName := strings.Join([]string{options.PVC.Namespace, options.PVC.Name, options.PVName}, "-")
 	fullPath := path.Join(exportPath, pvName)
-	if err := os.MkdirAll(fullPath, 0700); err != nil {
+	if err := os.MkdirAll(fullPath, 0770); err != nil {
 		return nil, controller.ProvisioningFinished, errors.New("unable to create directory to provision new pv: " + err.Error())
 	}
-
+	
 	capacity := options.PVC.Spec.Resources.Requests[v1.ResourceName(v1.ResourceStorage)]
 	block, err := p.createQuota(exportPath, fullPath, strconv.FormatInt(capacity.Value(), 10))
 	if err != nil {
